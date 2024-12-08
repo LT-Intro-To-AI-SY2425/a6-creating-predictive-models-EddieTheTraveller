@@ -47,7 +47,7 @@ plt.ylabel("Chirps per Minute")
 plt.title("Cricket Chirps by Temperature")
 
 # plot the line of best fit in red and label the line
-plt.plot(x, coef*x + intercept, c="r", label="Line of Best Fit")
+plt.plot(x, coef*x + intercept,c="r", label="Line of Best Fit")
 
 # show the plot and legend
 plt.legend()
