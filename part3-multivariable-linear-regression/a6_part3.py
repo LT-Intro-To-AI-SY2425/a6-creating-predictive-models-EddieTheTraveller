@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
@@ -10,13 +11,46 @@ y = data["Price"].values
 
 #split the data into training and testing data
 
+xtrain, xtest, ytrain, ytest = train_test_split(x,y, test_size= .2)
+
 #create linear regression model
+
+model = LinearRegression().fit(xtrain,ytrain)
 
 #Find and print the coefficients, intercept, and r squared values. 
 #Each should be rounded to two decimal places. 
 
+coef = np.around(model.coef_, 2)
+intecerpt = round(float(model.intercept_), 2)
+r_squared = round(model.score(x,y), 2)
+
+print("The Coefficient:", coef)
+print(f"Model's Linear Equation: y= {coef[0]}x + {coef[1]}x1 + {intecerpt}")
+print("R Squared Value:", r_squared)
 
 #Loop through the data and print out the predicted prices and the 
 #actual prices
 print("***************")
 print("Testing Results")
+
+predict = model.predict(xtest)
+predict = np.around(predict, 2)
+print(predict)
+
+print("\nPersonal Predictions")
+x_predictOneMiles = 89000
+x_predictOneAge = 10
+prediction = model.predict([[x_predictOneMiles, x_predictOneAge]])
+print(f"Prediction when miles is {x_predictOneMiles} and age is {x_predictOneAge}: {prediction}")
+
+x_predictTwoMiles = 150000
+x_predictTwoAge = 20
+predictionT = model.predict([[x_predictTwoMiles, x_predictTwoAge]])
+print(f"Prediction when miles is {x_predictTwoMiles} and age is {x_predictTwoAge}: {predictionT}")
+
+print("\n Testing Multivariable Model with Testing Data:")
+for index in range(len(xtest)):
+    actual = ytest[index]
+    predicted_y = predict[index]
+    x_coord = xtest[index] 
+    print(f"Miles: {x_coord[0]} Age: {x_coord[1]} Actual: {actual} Predicted: {predicted_y}")
